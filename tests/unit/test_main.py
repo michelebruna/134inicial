@@ -1,26 +1,23 @@
+import csv
+
 import pytest
 
-# Na parte de cima fica o desenvolvimento e embaixo as funções. Quando for teste pode usar direto na função.
-def print_hi(name):
-    print(f'Hi, {name}')
-
-def somar (numero_a, numero_b):
-    resultado = numero_a + numero_b
-    return resultado
+from main import somar, subtrair, multiplicar, dividir
 
 
-def dividir (numero_a, numero_b):
+def ler_csv(arquivo_csv):
+    dados_csv = []
     try:
-        return numero_a / numero_b
-    except ZeroDivisionError:
-        return 'Não dividirás por zero'
-
-
-if __name__ == '__main__': # Essa linha não muda nunca, é onde indica que iniciou.
-    print_hi('Michele')
-
-    resultado = somar(5,7)
-    print(f' A soma: {resultado}')
+        with open(arquivo_csv, newline='') as massa:   # o newline é o que ignora a primeira linha, o cabeçalho
+            campos = csv.reader(massa, delimiter=',')
+            next(campos)
+            for linha in campos:
+                dados_csv.append(linha)
+        return dados_csv
+    except FileNotFoundError:
+        print(f'Arquivo não encontrado: {arquivo_csv}')
+    except Exception as fail:
+        print(f'Falha imprevista: {fail}')
 
 
 def teste_somar():
@@ -34,7 +31,7 @@ def teste_somar():
     resultado_obtido = somar(numero_a, numero_b)
 
     # 3 - Valida
-    assert resultado_esperado == resultado_obtido   # assert é o comando para comparar os dados
+    assert resultado_esperado == resultado_obtido  # assert é o comando para comparar os dados
 
 
 def teste_dividir_positivo():
@@ -44,10 +41,8 @@ def teste_dividir_positivo():
     numero_a = 27
     numero_b = 3
 
-
     # 1.2 = Resultados Esperados
     resultado_esperado = 9
-
 
     # 2 - Executa
     resultado_obtido = dividir(numero_a, numero_b)
@@ -64,10 +59,8 @@ def teste_dividir_negativo():
     numero_a = 27
     numero_b = 0
 
-
     # 1.2 = Resultados Esperados
     resultado_esperado = 'Não dividirás por zero'
-
 
     # 2 - Executa
     resultado_obtido = dividir(numero_a, numero_b)
@@ -76,33 +69,40 @@ def teste_dividir_negativo():
     assert resultado_obtido == resultado_esperado
 
 
- # lista para uso como massa de teste. Essa lista se chama de tupla
+# lista para uso como massa de teste. Essa lista se chama de tupla
 lista_de_valores = [
     (8, 7, 15),
     (20, 30, 50),
     (25, 0, 25),
     (-5, 12, 7),
     (6, -3, 3)
-    ]
+]
+
 
 @pytest.mark.parametrize('numero_a, numero_b, resultado_esperado', lista_de_valores)
 def teste_somar_leitura_de_lista(numero_a, numero_b, resultado_esperado):
-        # O teste é sempre dividido em três partes
-        # 1 - Configura
-        # Utilizamos a lista como massa de teste
+    # O teste é sempre dividido em três partes
+    # 1 - Configura
+    # Utilizamos a lista como massa de teste
+
+    # 2 - Executa
+    resultado_obtido = somar(numero_a, numero_b)
+
+    # 3 - Valida
+    assert resultado_esperado == resultado_obtido  # assert é o comando para comparar os dados
 
 
-        # 2 - Executa
-        resultado_obtido = somar(numero_a, numero_b)
+@pytest.mark.parametrize('numero_a,numero_b,resultado_esperado',ler_csv('C:\\Users\\miche\\PycharmProjects\\pythonProject\\134inicial\\vendors\\csv\\massa_teste_somar_positivo.csv'))
+def teste_somar_leitura_de_csv(numero_a, numero_b, resultado_esperado):
+    # O teste é sempre dividido em três partes
+    # 1 - Configura
+    # Utilizamos a lista como massa de teste
 
-        # 3 - Valida
-        assert resultado_esperado == resultado_obtido  # assert é o comando para comparar os dados
+    # 2 - Executa
+    resultado_obtido = somar(int(numero_a), int(numero_b))
 
-
-
-
-
-
+    # 3 - Valida
+    assert resultado_obtido == int(resultado_esperado)  # assert é o comando para comparar os dados
 
 # TDD - Teste Driven tedelopment
 #       Desenvolvimento Direcionado por Teste
@@ -141,4 +141,3 @@ def teste_somar_leitura_de_lista(numero_a, numero_b, resultado_esperado):
 
 
 # Eu vi este comentário
-

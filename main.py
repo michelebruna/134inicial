@@ -8,12 +8,17 @@ def somar (numero_a, numero_b):
     resultado = numero_a + numero_b
     return resultado
 
-
 def dividir (numero_a, numero_b):
     try:
         return numero_a / numero_b
     except ZeroDivisionError:
         return 'Não dividirás por zero'
+
+def subtrair(numero_a, numero_b):
+    return numero_a - numero_b
+
+def multiplicar(numero_a, numero_b):
+    return numero_a * numero_b
 
 
 if __name__ == '__main__': # Essa linha não muda nunca, é onde indica que iniciou.
@@ -35,6 +40,34 @@ def teste_somar():
 
     # 3 - Valida
     assert resultado_esperado == resultado_obtido   # assert é o comando para comparar os dados
+
+def teste_subtrair():
+    # 1 - Prepara / Configura
+    # 1.1 - Dados de Entrada / Valores do Teste
+    numero_a = 15
+    numero_b = 10
+
+    # 1.2 - Resultados Esperados
+    resultado_esperado = 5
+
+    # 2 - Executa
+    resultado_obtido = subtrair(numero_a, numero_b)
+
+    # 3 - Valida / Checa
+    assert resultado_obtido == resultado_esperado
+
+
+def teste_multiplicar():
+    # 1 - Configura
+    numero_a = 3
+    numero_b = 4
+    resultado_esperado = 12
+
+    # 2 - Executa
+    resultado_obtido = multiplicar(numero_a, numero_b)
+
+    # 3 - Valida
+    assert resultado_obtido == resultado_esperado
 
 
 def teste_dividir_positivo():
