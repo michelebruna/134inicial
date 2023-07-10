@@ -33,6 +33,31 @@ def teste_somar():
     # 3 - Valida
     assert resultado_esperado == resultado_obtido  # assert é o comando para comparar os dados
 
+@pytest.mark.parametrize('numero_a,numero_b,resultado_esperado',ler_csv('C:\\Users\\miche\\PycharmProjects\\pythonProject\\134inicial\\vendors\\csv\\massa_teste_subtrair_positivo.csv'))
+def teste_subtrair_leitura_csv(numero_a,numero_b,resultado_esperado):
+    # 1 - Prepara / Configura
+    # 1.1 - Dados de Entrada / Valores do Teste
+    # 1.2 - Resultados Esperados
+
+    # 2 - Executa
+    resultado_obtido = subtrair(int(numero_a), int(numero_b))
+
+    # 3 - Valida / Checa
+    assert resultado_obtido == int(resultado_esperado)
+
+
+def teste_multiplicar():
+    # 1 - Configura
+    numero_a = 3
+    numero_b = 4
+    resultado_esperado = 12
+
+    # 2 - Executa
+    resultado_obtido = multiplicar(numero_a, numero_b)
+
+    # 3 - Valida
+    assert resultado_obtido == resultado_esperado
+
 
 def teste_dividir_positivo():
     # 1 - Configura
